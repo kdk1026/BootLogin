@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- configuration file for LogBack (slf4J implementation)
+See here for more details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
+<configuration scan="true" scanPeriod="30 seconds">
+
+	<contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+		<resetJUL>true</resetJUL>
+	</contextListener>
+
+	<!-- To enable JMX Management -->
+	<jmxConfigurator/>
+       
+	<property name="LOG_PATH" value="/logs"/>
+	<property name="LOG_FILE_NAME" value="bootLogin"/>
+
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[%d{HH:mm:ss:SS}][%thread][%-5level][%logger{0}:%method:%line] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="packageFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_FILE_NAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE_NAME}.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%d{HH:mm:ss:SS}][%thread][%-5level][%logger{0}] - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Spring Framework -->	
+	<logger name="org.springframework" level="error" />
+	<logger name="org.apache.ibatis.session" level="error" />
+	<logger name="org.mybatis.spring.SqlSessionUtils" level="error" />
+	<logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="packageFile"/>
+	</logger>
+               
+	<!-- SQL -->
+	<logger name="java.sql" level="error" />
+	<logger name="jdbc.sqlonly" level="off" />
+	<logger name="jdbc.sqltiming" level="info" additivity="false">
+		<appender-ref ref="console"/>
+	</logger>
+	<logger name="jdbc.audit" level="off" />
+	<logger name="jdbc.resultset" level="off" />
+	<logger name="jdbc.resultsettable" level="info" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="packageFile"/>
+	</logger>
+	<logger name="jdbc.connection" level="error" />
+
+	<!-- Personal -->
+	<logger name="com.zaxxer.hikari" level="error" />
+	<logger name="org.thymeleaf" level="error"/>
+       
+	<!-- Package -->
+	<logger name="kr.co.test" level="debug" additivity="false">
+		<appender-ref ref="console"/>
+		<appender-ref ref="packageFile"/>
+	</logger>
+	<logger name="kr.co.test.mapper" level="info" />
+
+	<root level="info">
+		<appender-ref ref="console"/>
+	</root>
+
+</configuration>

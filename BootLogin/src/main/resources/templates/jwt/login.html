@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:include="fragments/common/head"></th:block>
+	<title>JWT 로그인</title>
+	
+	<style type="text/css">
+		.error { color: #ff1616; text-align: left; }
+	</style>
+</head>
+<body>
+	<div class="row">
+		<div class="col-md-6 col-lg-6" style="float: none; margin: 0 auto;">
+			<!-- Default form login -->
+			<form class="text-center border border-light p-5" id="frmLogin" name="frmLogin" method="post" th:action="@{/jwt/loginProc}">
+			    <p class="h4 mb-4">로그인</p>
+			
+				<!-- Id -->
+				<div>
+					<input type="text" id="id" name="id" class="form-control mb-3" placeholder="아이디" />
+					<div class="error mb-4" id="err_id" style="display: none;">아이디를 입력해주세요.</div>
+				</div>
+			
+				<!-- Password -->
+				<div>
+					<input type="password" id="pw" name="pw" class="form-control mb-3" placeholder="비밀번호" />
+					<div class="error mb-4" id="err_pw" style="display: none;">비밀번호를 입력해주세요.</div>
+				</div>
+				
+				<div>
+					<div class="error mb-4" th:if="${res_msg != null}" th:text="${res_msg}"></div>
+				</div>
+			
+			    <div class="d-flex">
+			        <div style="margin-left: auto; width: 40%;">
+			            <div class="custom-control custom-checkbox">
+			                <input type="checkbox" class="custom-control-input" id="login_chk" name="login_chk" value="off" />
+			                <label class="custom-control-label" for="login_chk">로그인 상태 유지</label>
+			            </div>
+			        </div>
+			        <div style="margin-right: auto; width: 40%;">
+			        	<a href="#" id="findId">아이디 찾기</a>
+			        	·
+			            <a href="#" id="findPw">비밀번호 찾기</a>
+			        </div>
+			    </div>
+			
+			    <!-- Sign in button -->
+			    <button class="btn btn-info btn-block my-4" type="button" id="btnLogin">로그인</button>
+			
+				<!--/* Register
+			    <p>Not a member?
+			        <a href="">Register</a>
+			    </p>
+			    */-->
+			
+				<!--/* Social login  
+			    <p>or sign in with:</p>
+			
+			    <a type="button" class="light-blue-text mx-2">
+			        <i class="fa fa-facebook"></i>
+			    </a>
+			    <a type="button" class="light-blue-text mx-2">
+			        <i class="fa fa-twitter"></i>
+			    </a>
+			    <a type="button" class="light-blue-text mx-2">
+			        <i class="fa fa-linkedin"></i>
+			    </a>
+			    <a type="button" class="light-blue-text mx-2">
+			        <i class="fa fa-github"></i>
+			    </a>
+				*/-->
+			</form>
+		</div>
+	</div>
+	
+	<script type="text/javascript" th:inline="javascript">
+	//<![CDATA[
+		$(function(){
+			$('#btnLogin').click(function(){
+				var frmLogin = document.frmLogin;
+				var isValid = fnValidForm(frmLogin);
+				if ( isValid ) {
+					frmLogin.submit();
+				}
+			});
+			
+			$.enterEventFocus( $('#id') );
+			$.enterEventCallback( $('#pw'), fnBtnLoginTrigger );
+			
+			$('#login_chk').click(function(){
+				if ( $(this).is(':checked') ) {
+					$(this).val('on');
+				} else {
+					$(this).val('off');
+				}
+			});
+			
+			
+			$('#findId, #findPw').click(function(e){
+				e.preventDefault();
+				
+				$('#alertModal #message').text('로그인 샘플이므로 그딴거 없음');
+				$('#alertModal').modal('show');
+			});
+		});
+
+		function fnValidForm(frmLogin) {
+			var id = frmLogin.id;
+			if ( CommonJS.Valid.isBlank(id.value) ) {
+				$('#err_id').show();
+				id.focus();
+				return false;
+			} else {
+				if ( $('#err_id').css('display') != 'none' ) {
+					$('#err_id').hide();
+				}
+			}
+			
+			var pw = frmLogin.pw;
+			if ( CommonJS.Valid.isBlank(pw.value) ) {
+				$('#err_pw').show();
+				pw.focus();
+				return false;
+			} else {
+				if ( $('#err_pw').css('display') != 'none' ) {
+					$('#err_pw').hide();
+				}
+			}
+			
+			return true;
+		}
+		
+		function fnBtnLoginTrigger() {
+			$('#btnLogin').trigger('click');
+		}
+	//]]>
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+</head>
+<body th:fragment="mainBody (type)">
+	<div class="wrapper">
+		<th:block layout:fragment="content_body"></th:block>
+		<th:block th:include="fragments/common/header :: header (${type})"></th:block>
+		<th:block th:include="fragments/common/footer :: footer"></th:block>
+	</div>
+	
+	<th:block layout:fragment="custom_js"></th:block>
+	
+	<th:block th:include="fragments/common/timer :: timer (${type})"></th:block>
+</body>
+</html>

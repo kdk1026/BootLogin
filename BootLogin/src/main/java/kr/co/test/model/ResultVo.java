@@ -1,0 +1,21 @@
+package kr.co.test.model;
+
+import lombok.Data;
+
+/**
+ * 응답 VO
+ * @since 2018. 12. 24.
+ * @author 김대광
+ * <pre>
+ * -----------------------------------
+ * 개정이력
+ * 2018. 12. 24. 김대광	최초작성
+ * </pre>
+ */
+@Data
+public class ResultVo {
+
+	private String res_cd;
+	private String res_msg;
+	
+}
