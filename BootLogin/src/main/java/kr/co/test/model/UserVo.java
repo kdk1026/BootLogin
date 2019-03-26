@@ -1,6 +1,8 @@
 package kr.co.test.model;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 /**
  * 계정 정보 VO
@@ -12,7 +14,9 @@ import lombok.Data;
  * 2018. 12. 24. 김대광	최초작성
  * </pre>
  */
-@Data
+@Getter
+@Setter
+@ToString
 public class UserVo {
 
 	private String id;
