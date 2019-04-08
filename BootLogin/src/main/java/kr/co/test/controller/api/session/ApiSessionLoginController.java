@@ -1,7 +1,5 @@
 package kr.co.test.controller.api.session;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,12 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import common.LogDeclare;
 import common.ResponseCodeEnum;
-import common.util.map.MapUtil;
 import common.util.map.ParamMap;
 import config.mvc.resolver.ParamCollector;
 import kr.co.test.common.Constants;
-import kr.co.test.model.ResultVo;
-import kr.co.test.service.session.SessionLoginService;
+import kr.co.test.service.session.ApiSessionLoginService;
 
 /**
  * <pre>
@@ -24,7 +20,7 @@ import kr.co.test.service.session.SessionLoginService;
  *  	> Cookie : JSESSION_ID=session_id
  *  
  *  - 앱의 경우, 일반적으로 자동로그인 체계이므로 세션은 부적함
- *  - 세션 유효기간 제한 없을 경우, 서부 부담 상당함
+ *  - 세션 유효기간 제한 없을 경우, 서버 부담 상당함
  * </pre>
  * @since 2018. 12. 30.
  * @author 김대광
@@ -39,7 +35,7 @@ import kr.co.test.service.session.SessionLoginService;
 public class ApiSessionLoginController extends LogDeclare {
 
 	@Autowired
-	private SessionLoginService sessionLoginService;
+	private ApiSessionLoginService apiSessionLoginService;
 	
 	@PostMapping("/login")
 	public ParamMap login(ParamCollector paramCollector) {
@@ -49,19 +45,11 @@ public class ApiSessionLoginController extends LogDeclare {
 		if ( !retMap.isEmpty() ) {
 			return retMap;
 		}
-		retMap.clear();
 		
-		ResultVo resultVo = sessionLoginService.processLogin(paramCollector);
-		
-		Map<String, String> map = MapUtil.objectToMap(resultVo);
-		retMap.putAll(map);
-		
-		sessionLoginService.getSessionOptionInfo(paramCollector, retMap);
-		
-		return retMap;
+		return apiSessionLoginService.processLogin(paramCollector);
 	}
 	
-	public ParamMap valid(ParamCollector paramCollector) {
+	private ParamMap valid(ParamCollector paramCollector) {
 		ParamMap retMap = new ParamMap();
 		
 		if ( !paramCollector.containsKey("id") || StringUtils.isBlank(paramCollector.getString("id")) ) {
@@ -81,14 +69,7 @@ public class ApiSessionLoginController extends LogDeclare {
 	
 	@PostMapping("/logout")
 	public ParamMap logout(ParamCollector paramCollector) {
-		ParamMap retMap = new ParamMap();
-		
-		ResultVo resultVo = sessionLoginService.processLogout(paramCollector);
-		
-		Map<String, String> map = MapUtil.objectToMap(resultVo);
-		retMap.putAll(map);
-		
-		return retMap;
+		return apiSessionLoginService.processLogout(paramCollector);
 	}
 	
 }

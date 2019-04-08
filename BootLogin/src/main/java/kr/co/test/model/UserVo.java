@@ -16,11 +16,13 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "pw")
 public class UserVo {
 
 	private String id;
 	private String pw;
+
+	private String name;
 	private String last_login_dt;
 	private String last_pwd_upd_dt;
 	

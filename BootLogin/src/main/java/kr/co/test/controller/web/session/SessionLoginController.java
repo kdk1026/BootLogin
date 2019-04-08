@@ -43,7 +43,7 @@ public class SessionLoginController extends LogDeclare {
 		ModelAndView mav = new ModelAndView();
 		String sRedirectUrl = "";
 		
-		ResultVo resultVo = sessionLoginService.processLogin(paramCollector);
+		ResultVo resultVo = sessionLoginService.loginAuth(paramCollector);
 		
 		if ( ResponseCodeEnum.SUCCESS.getCode().equals(resultVo.getRes_cd()) ) {
 			sRedirectUrl = "redirect:/session/main";

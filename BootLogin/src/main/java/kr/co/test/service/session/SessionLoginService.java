@@ -1,20 +1,14 @@
 package kr.co.test.service.session;
 
-import java.util.Date;
-
-import javax.servlet.http.HttpSession;
-
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import common.LogDeclare;
 import common.ResponseCodeEnum;
-import common.util.date.Jsr310DateUtil;
-import common.util.map.ParamMap;
 import common.util.sessioncookie.SessionUtils;
 import config.mvc.resolver.ParamCollector;
+import kr.co.test.common.mvc.service.CommonService;
 import kr.co.test.mapper.account.LoginMapper;
 import kr.co.test.model.ResultVo;
 import kr.co.test.model.UserVo;
@@ -29,7 +23,7 @@ import kr.co.test.model.UserVo;
  * </pre>
  */
 @Service
-public class SessionLoginService extends LogDeclare {
+public class SessionLoginService extends CommonService {
 
 	@Autowired
 	private LoginMapper loginMapper;
@@ -37,12 +31,14 @@ public class SessionLoginService extends LogDeclare {
 	@Value("#{common['session.expire.second']}")
 	private String sSessionExpireSecond;
 	
+	//processLogin
+	
 	/**
 	 * 세션 로그인 처리
 	 * @param paramCollector
 	 * @return
 	 */
-	public ResultVo processLogin(ParamCollector paramCollector) {
+	public ResultVo loginAuth(ParamCollector paramCollector) {
 		ResultVo resultVo = new ResultVo();
 		resultVo.setRes_cd(ResponseCodeEnum.LOGIN_INVALID.getCode());
 		resultVo.setRes_msg(ResponseCodeEnum.LOGIN_INVALID.getMessage());
@@ -102,22 +98,6 @@ public class SessionLoginService extends LogDeclare {
 		resultVo.setRes_msg(ResponseCodeEnum.SUCCESS.getMessage());
 		
 		return resultVo;
-	}
-	
-	/**
-	 * <pre>
-	 * 세션 부가 정보
-	 *  - API 전용
-	 * </pre>
-	 * @param paramCollector
-	 * @param retMap
-	 */
-	public void getSessionOptionInfo(ParamCollector paramCollector, ParamMap retMap) {
-		HttpSession session = paramCollector.getRequest().getSession(false);
-		
-		retMap.put("session_id", 				session.getId());
-		retMap.put("session_create_time", 		Jsr310DateUtil.Convert.getDateToString(new Date(session.getCreationTime()), "yyyyMMddHHmmss"));
-		retMap.put("session_active_interval",	session.getMaxInactiveInterval());
 	}
 	
 }
