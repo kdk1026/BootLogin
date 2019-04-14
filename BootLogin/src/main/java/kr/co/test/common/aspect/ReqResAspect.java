@@ -10,7 +10,6 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import common.LogDeclare;
@@ -19,7 +18,6 @@ import common.util.RequestIpUtil;
 import common.util.json.JacksonUtil;
 import common.util.map.ParamMap;
 import config.mvc.resolver.ParamCollector;
-import kr.co.test.common.Constants;
 
 /**
  * @since 2019. 1. 3.
@@ -41,7 +39,6 @@ public class ReqResAspect extends LogDeclare {
 	public void restControllerBean() {}
 	
 	@Autowired
-	private Environment env;
 	
 //	@Around("controllerBean() || restControllerBean()")
 	@Around("restControllerBean()")
