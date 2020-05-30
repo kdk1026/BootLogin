@@ -2,17 +2,22 @@ package config.mvc.interceptor.web;
 
 import java.util.Properties;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import common.util.properties.PropertiesUtil;
+import common.util.sessioncookie.CookieUtilVer2;
 import common.util.sessioncookie.SessionUtils;
+import kr.co.test.common.Constants;
 import kr.co.test.model.UserVo;
+import kr.co.test.service.session.SessionLoginService;
 
 /**
  * @since 2018. 12. 25.
@@ -24,6 +29,9 @@ import kr.co.test.model.UserVo;
  * </pre>
  */
 public class SessionInterceptor extends HandlerInterceptorAdapter {
+	
+	@Autowired
+	private SessionLoginService sessionLoginService;
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -64,6 +72,21 @@ public class SessionInterceptor extends HandlerInterceptorAdapter {
 			
 		} else {
 			logger.info("[Session] - Null");
+			
+			Cookie loginCookie = CookieUtilVer2.getCookie(request, Constants.Cookie.IS_AUTO_LOGIN);
+			
+			if (loginCookie != null) {
+				String sSessionId = loginCookie.getValue();
+				UserVo userVo = sessionLoginService.checkUserWithSessionKey(sSessionId);
+				
+				if (userVo != null) {
+					SessionUtils.LoginInfo.setAttribute(request, userVo);
+					return true;
+				} else {
+					response.sendRedirect(sCtxPath + LOGIN_PAGE_URI);
+					return false;					
+				}
+			}
 			
 			response.sendRedirect(sCtxPath + LOGIN_PAGE_URI);
 			return false;

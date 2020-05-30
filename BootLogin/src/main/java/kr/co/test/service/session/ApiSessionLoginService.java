@@ -3,6 +3,7 @@ package kr.co.test.service.session;
 import java.util.Date;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,10 @@ public class ApiSessionLoginService extends CommonService {
 	 * @param paramCollector
 	 * @return
 	 */
-	public ParamMap processLogin(ParamCollector paramCollector) {
+	public ParamMap processLogin(ParamCollector paramCollector, HttpServletResponse response) {
 		ParamMap retMap = new ParamMap();
 		
-		ResultVo resultVo = sessionLoginService.loginAuth(paramCollector);
+		ResultVo resultVo = sessionLoginService.loginAuth(paramCollector, response);
 		
 		Map<String, String> map = MapUtil.objectToMap(resultVo);
 		retMap.putAll(map);
@@ -70,10 +71,10 @@ public class ApiSessionLoginService extends CommonService {
 	 * @param paramCollector
 	 * @return
 	 */
-	public ParamMap processLogout(ParamCollector paramCollector) {
+	public ParamMap processLogout(ParamCollector paramCollector, HttpServletResponse response) {
 		ParamMap retMap = new ParamMap();
 		
-		ResultVo resultVo = sessionLoginService.processLogout(paramCollector);
+		ResultVo resultVo = sessionLoginService.processLogout(paramCollector, response);
 		
 		Map<String, String> map = MapUtil.objectToMap(resultVo);
 		retMap.putAll(map);

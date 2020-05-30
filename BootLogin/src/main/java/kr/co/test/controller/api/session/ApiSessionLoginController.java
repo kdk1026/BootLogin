@@ -1,5 +1,7 @@
 package kr.co.test.controller.api.session;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +40,7 @@ public class ApiSessionLoginController extends LogDeclare {
 	private ApiSessionLoginService apiSessionLoginService;
 	
 	@PostMapping("/login")
-	public ParamMap login(ParamCollector paramCollector) {
+	public ParamMap login(ParamCollector paramCollector, HttpServletResponse response) {
 		ParamMap retMap = new ParamMap();
 		
 		retMap = this.valid(paramCollector);
@@ -46,7 +48,7 @@ public class ApiSessionLoginController extends LogDeclare {
 			return retMap;
 		}
 		
-		return apiSessionLoginService.processLogin(paramCollector);
+		return apiSessionLoginService.processLogin(paramCollector, response);
 	}
 	
 	private ParamMap valid(ParamCollector paramCollector) {
@@ -68,8 +70,8 @@ public class ApiSessionLoginController extends LogDeclare {
 	}
 	
 	@PostMapping("/logout")
-	public ParamMap logout(ParamCollector paramCollector) {
-		return apiSessionLoginService.processLogout(paramCollector);
+	public ParamMap logout(ParamCollector paramCollector, HttpServletResponse response) {
+		return apiSessionLoginService.processLogout(paramCollector, response);
 	}
 	
 }

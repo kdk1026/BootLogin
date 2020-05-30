@@ -100,7 +100,7 @@ public class JwtTokenProvider extends LogDeclare {
 	 		.signWith(SignatureAlgorithm.HS256, commProp.getProperty("jwt.secret.key." + this.profile))
 	 		.setExpiration( this.getExpirationTime(sExpireTime, sDeviceId) );
 		
-		String sUserJson = GsonUtil.converterObjToJsonStr(user);
+		String sUserJson = GsonUtil.ToJson.converterObjToJsonStr(user);
 		
 		builder.claim(Constants.Jwt.TOKEN_KIND, Constants.Jwt.ACCESS_TOKEN);
 		builder.claim(SessionUtils.LoginInfo.SESSION_KEY, sUserJson);
@@ -129,7 +129,7 @@ public class JwtTokenProvider extends LogDeclare {
 	 		.signWith(SignatureAlgorithm.HS256, commProp.getProperty("jwt.secret.key." + this.profile))
 	 		.setExpiration( this.getExpirationTime(sExpireTime, sDeviceId) );
 		
-		String sUserJson = GsonUtil.converterObjToJsonStr(user);
+		String sUserJson = GsonUtil.ToJson.converterObjToJsonStr(user);
 		
 		builder.claim(Constants.Jwt.TOKEN_KIND, Constants.Jwt.REFRESH_TOKEN);
 		builder.claim(SessionUtils.LoginInfo.SESSION_KEY, sUserJson);

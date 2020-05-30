@@ -6,9 +6,16 @@
 	<script type="text/javascript" th:inline="javascript" th:if="${type} == 'session'">
 	//<![CDATA[
 		var _EXPIRES_IN_ = [[${expires_in}]];
-		_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
 		
-		var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+		if ( !CommonJS.Valid.isBlank(_EXPIRES_IN_) ) {
+			_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
+			
+			var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+			
+			var x = setInterval(function(){
+				fnAutoLogout();
+			}, 1000);
+		}
 		
 		function fnAutoLogout() {
 			var nowTime = new Date().getTime();
@@ -23,19 +30,22 @@
 				location.href = url;
 			}
 		}
-		
-		var x = setInterval(function(){
-			fnAutoLogout();
-		}, 1000);
 	//]]>
 	</script>
 	
 	<script type="text/javascript" th:inline="javascript" th:if="${type} == 'cookie'">
 	//<![CDATA[
 		var _EXPIRES_IN_ = [[${expires_in}]];
-		_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
 		
-		var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+		if ( !CommonJS.Valid.isBlank(_EXPIRES_IN_) ) {
+			_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
+			
+			var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+			
+			var x = setInterval(function(){
+				fnAutoLogout();
+			}, 1000);
+		}
 		
 		function fnAutoLogout() {
 			var nowTime = new Date().getTime();
@@ -52,19 +62,22 @@
 				location.href = url;
 			}
 		}
-		
-		var x = setInterval(function(){
-			fnAutoLogout();
-		}, 1000);
 	//]]>
 	</script>
 	
 	<script type="text/javascript" th:inline="javascript" th:if="${type} == 'jwt'">
 	//<![CDATA[
 		var _EXPIRES_IN_ = [[${expires_in}]];
-		_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
 		
-		var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+		if ( !CommonJS.Valid.isBlank(_EXPIRES_IN_) ) {
+			_EXPIRES_IN_ = _EXPIRES_IN_ - 30;
+			
+			var limitTime = CommonJS.DateTime.plusMinusSecond(_EXPIRES_IN_).getTime();
+			
+			var x = setInterval(function(){
+				fnAutoLogout();
+			}, 1000);
+		}
 		
 		function fnAutoLogout() {
 			var nowTime = new Date().getTime();
@@ -81,10 +94,6 @@
 				location.href = url;
 			}
 		}
-		
-		var x = setInterval(function(){
-			fnAutoLogout();
-		}, 1000);
 	//]]>
 	</script>
 </body>

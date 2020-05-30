@@ -3,6 +3,7 @@ package config;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -37,6 +38,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		argumentResolvers.add(new ParamMapArgResolver());
 	}
 	
+	@Bean
+	public SessionInterceptor sessionInterceptor() {
+		return new SessionInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		String sProfile = env.getActiveProfiles()[0];
@@ -44,7 +50,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 		//--------------------------------------------------
 		// Web
 		//--------------------------------------------------
-		registry.addInterceptor(new SessionInterceptor())
+		registry.addInterceptor( sessionInterceptor() )
 					.addPathPatterns("/session/**")
 					.excludePathPatterns("/session/login**");
 		

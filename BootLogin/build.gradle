@@ -52,7 +52,7 @@ dependencies {
 	}
 	
 	providedRuntime group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper'
-	compile group: 'kdk', name: 'CommonJava8', version: '0.1'
+	compile group: 'kdk', name: 'CommonJava8', version: '0.2'
 	
 	// https://mvnrepository.com/artifact/org.mindrot/jbcrypt
 	compile group: 'org.mindrot', name: 'jbcrypt', version: '0.4'

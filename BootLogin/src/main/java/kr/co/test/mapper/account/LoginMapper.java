@@ -24,4 +24,23 @@ public interface LoginMapper {
 	 */
 	public UserVo selectById(ParamMap paramMap);
 	
+	/**
+	 * 자동로그인 세션정보 저장
+	 * @param paramMap
+	 */
+	public void insertKeepLogin(ParamMap paramMap);
+	
+	/**
+	 * 자동로그인 세션정보 삭제
+	 * @param paramMap
+	 */
+	public void deleteKeppLogin(ParamMap paramMap);
+	
+	/**
+	 * 로그인 시 loginCookie 값과 SESSION_KEY가 일치하는 회원의 정보를 가져옴
+	 * @param sessionId
+	 * @return
+	 */
+	public UserVo selectChekUserWithSessionKey(String sessionId);
+	
 }

@@ -82,7 +82,7 @@ public class CookieLoginService extends LogDeclare {
 		//--------------------------------------------------
 		// 객체를 JSON String으로 변환
 		//--------------------------------------------------
-		String sUserJson = GsonUtil.converterObjToJsonStr(userVo);
+		String sUserJson = GsonUtil.ToJson.converterObjToJsonStr(userVo);
 		
 		//--------------------------------------------------
 		// AES 128 암호화

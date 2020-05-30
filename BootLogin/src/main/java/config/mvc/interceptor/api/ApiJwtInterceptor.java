@@ -59,14 +59,14 @@ public class ApiJwtInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_TOEKN_INVALID.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_TOEKN_INVALID.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);			
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);		
 			break;
 			
 		case 2:
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_TOKEN_EXPIRED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_TOKEN_EXPIRED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);			
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);		
 			break;
 
 		default:
@@ -93,7 +93,7 @@ public class ApiJwtInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);
@@ -112,7 +112,7 @@ public class ApiJwtInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);

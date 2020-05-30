@@ -1,5 +1,7 @@
 package kr.co.test.controller.web.session;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,11 +41,12 @@ public class SessionLoginController extends LogDeclare {
 	}
 	
 	@PostMapping("/loginProc")
-	public ModelAndView loginProc(ParamCollector paramCollector, RedirectAttributes attributes) {
+	public ModelAndView loginProc(ParamCollector paramCollector, RedirectAttributes attributes,
+			HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		String sRedirectUrl = "";
 		
-		ResultVo resultVo = sessionLoginService.loginAuth(paramCollector);
+		ResultVo resultVo = sessionLoginService.loginAuth(paramCollector, response);
 		
 		if ( ResponseCodeEnum.SUCCESS.getCode().equals(resultVo.getRes_cd()) ) {
 			sRedirectUrl = "redirect:/session/main";
@@ -58,10 +61,10 @@ public class SessionLoginController extends LogDeclare {
 	}
 	
 	@GetMapping("/logout")
-	public ModelAndView logout(ParamCollector paramCollector) {
+	public ModelAndView logout(ParamCollector paramCollector, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView();
 		
-		sessionLoginService.processLogout(paramCollector);
+		sessionLoginService.processLogout(paramCollector, response);
 		
 		mav.setViewName("redirect:/session/login");
 		return mav;

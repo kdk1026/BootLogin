@@ -57,7 +57,7 @@ public class ApiCookieInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);
@@ -75,7 +75,7 @@ public class ApiCookieInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);
@@ -94,7 +94,7 @@ public class ApiCookieInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);
@@ -117,7 +117,7 @@ public class ApiCookieInterceptor extends HandlerInterceptorAdapter {
 			resultVo.setRes_cd(ResponseCodeEnum.ACCESS_DENIED.getCode());
 			resultVo.setRes_msg(ResponseCodeEnum.ACCESS_DENIED.getMessage());
 			
-			sRetJson = GsonUtil.converterObjToJsonStr(resultVo);
+			sRetJson = GsonUtil.ToJson.converterObjToJsonStr(resultVo);
 			
 			response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 			response.setCharacterEncoding(Constants.Encoding.UTF_8);

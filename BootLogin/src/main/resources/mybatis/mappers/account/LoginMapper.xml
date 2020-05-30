@@ -14,5 +14,39 @@
 			 WHERE username = #{id}
 		]]>
 	</select>
+	
+	<!-- 자동로그인 세션정보 저장 -->
+	<insert id="insertKeepLogin" parameterType="paramMap">
+		/* LoginMapper.insertKeepLogin */
+		INSERT INTO persistent_logins (
+			username
+			, session_id
+			, session_limit
+		) VALUES (
+			#{id}
+			, #{sessionId}
+			, #{next}
+		)
+	</insert>
+	
+	<!-- 자동로그인 세션정보 삭제 -->
+	<delete id="deleteKeppLogin" parameterType="paramMap">
+		/* LoginMapper.deleteKeppLogin */
+		DELETE FROM persistent_logins WHERE username = #{id} 
+	</delete>
+	
+	<!-- 로그인 시 loginCookie 값과 SESSION_KEY가 일치하는 회원의 정보를 가져옴 -->
+	<select id="selectChekUserWithSessionKey" parameterType="string" resultType="kr.co.test.model.UserVo">
+		/* LoginMapper.selectChekUserWithSessionKey */
+		SELECT member.username AS id
+			, member.password AS pw
+			, FORMATDATETIME(NVL(member.last_login_dt, SYSDATE), 'yyyy-MM-dd HH:mm:ss') AS last_login_dt
+			, FORMATDATETIME(NVL(member.last_pwd_upd_dt, SYSDATE), 'yyyy-MM-dd HH:mm:ss') AS last_pwd_upd_dt
+		  FROM member_account member
+		  LEFT JOIN persistent_logins per
+		    on member.username = per.username
+		 WHERE session_id = #{sessionId}
+		   AND session_limit >= SYSTIMESTAMP   
+	</select>
 
 </mapper>
