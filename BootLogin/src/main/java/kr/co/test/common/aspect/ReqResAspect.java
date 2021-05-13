@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 import common.LogDeclare;
 import common.util.FormattingUtil;
-import common.util.RequestIpUtil;
+import common.util.RequestUtil;
 import common.util.json.JacksonUtil;
 import common.util.map.ParamMap;
 import config.mvc.resolver.ParamCollector;
@@ -84,7 +84,7 @@ public class ReqResAspect extends LogDeclare {
 
 			// 헤더
 			if ( !headerMap.isEmpty() ) {
-				sHeader = JacksonUtil.converterMapToJsonStr(headerMap);
+				sHeader = JacksonUtil.ToJson.converterMapToJsonStr(headerMap);
 			}
 
 			// 파라미터
@@ -97,10 +97,10 @@ public class ReqResAspect extends LogDeclare {
 					logParamMap.put("pw", FormattingUtil.passwordMasking(sPw) );
 				}
 				
-				sParam = JacksonUtil.converterMapToJsonStr(logParamMap);
+				sParam = JacksonUtil.ToJson.converterMapToJsonStr(logParamMap);
 			}
 			
-			String sReqIp = RequestIpUtil.getIpAdd(request);
+			String sReqIp = RequestUtil.getRequestIpAddress(request);
 			sReqIp = FormattingUtil.makeIpv4AddrMasking(sReqIp);
 			
 			Map<String, Object> loggingMap = new LinkedHashMap<>();
