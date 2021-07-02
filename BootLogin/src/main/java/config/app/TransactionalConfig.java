@@ -78,7 +78,7 @@ public class TransactionalConfig {
 	private RuleBasedTransactionAttribute readOnlyTransactionRule () {
 		RuleBasedTransactionAttribute readOnly = new RuleBasedTransactionAttribute();
 		readOnly.setReadOnly(true);
-		readOnly.setPropagationBehavior(TransactionDefinition.PROPAGATION_NOT_SUPPORTED);
+		readOnly.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 		return readOnly;
 	}
 	
